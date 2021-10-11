@@ -1,22 +1,41 @@
-export const createShoppingListItem = `mutation createShoppingListItem($input: CreateShoppingListItemInput!) {
-  createShoppingListItem(input: $input) {
+/* eslint-disable */
+// this is an auto generated file. This will be overwritten
+
+export const notifyShoppingDone = /* GraphQL */ `
+  mutation NotifyShoppingDone {
+    notifyShoppingDone
+  }
+`;
+export const createShoppingListItem = /* GraphQL */ `
+  mutation CreateShoppingListItem($input: CreateShoppingListItemInput!) {
+    createShoppingListItem(input: $input) {
       id
       itemName
       isComplete
+      createdAt
+      updatedAt
     }
-  }`;
-
-  export const deleteShoppingListItem = `mutation deleteShoppingListItem($input: DeleteShoppingListItemInput!) {
+  }
+`;
+export const updateShoppingListItem = /* GraphQL */ `
+  mutation UpdateShoppingListItem($input: UpdateShoppingListItemInput!) {
+    updateShoppingListItem(input: $input) {
+      id
+      itemName
+      isComplete
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteShoppingListItem = /* GraphQL */ `
+  mutation DeleteShoppingListItem($input: DeleteShoppingListItemInput!) {
     deleteShoppingListItem(input: $input) {
       id
-      }
-    }`;
-
-
-    export const updateShoppingListItem = `mutation updateShoppingListItem($input: UpdateShoppingListItemInput!) {
-      updateShoppingListItem(input: $input) {
-        id
-        isComplete
-        itemName
-      }
-      }`;
+      itemName
+      isComplete
+      createdAt
+      updatedAt
+    }
+  }
+`;

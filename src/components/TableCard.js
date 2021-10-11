@@ -1,12 +1,14 @@
 import React from 'react';
 import '../App.css';
-import { Typography, Table, TableHead, TableRow, TableCell, TableBody, IconButton, Paper, Grid, Checkbox } from '@material-ui/core';
+import { Typography, Table, TableHead, TableRow, TableCell, TableBody, IconButton, Paper, Grid, Checkbox, TableFooter } from '@material-ui/core';
 import DeleteIcon from "@material-ui/icons/Delete";
+import MarkCompletedButton from './MarkCompletedButton'
 
 const TableCard = ({
   data,
   removeAction,
-  updateAction
+  updateAction,
+  markCompletedAction
 }) => {
   return (
     <Grid item xs={12}>
@@ -43,7 +45,14 @@ const TableCard = ({
             }) }
               
           </TableBody>
+        <TableFooter>
+        <div style={{paddingTop: '15px', display: 'flex'}}>
+          <MarkCompletedButton
+            purchaseAllAction = {markCompletedAction} />
+          </div>
+        </TableFooter>
         </Table>
+        
       : <Typography>You have not created any items</Typography>}
     </Paper>
     </Grid>

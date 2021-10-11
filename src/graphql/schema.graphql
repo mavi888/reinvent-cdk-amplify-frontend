@@ -1,0 +1,111 @@
+type ShoppingListItem @aws_api_key {
+  id: ID!
+  itemName: String!
+  isComplete: Boolean
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Mutation {
+  notifyShoppingDone: Boolean
+  createShoppingListItem(input: CreateShoppingListItemInput!): ShoppingListItem @aws_api_key
+  updateShoppingListItem(input: UpdateShoppingListItemInput!): ShoppingListItem @aws_api_key
+  deleteShoppingListItem(input: DeleteShoppingListItemInput!): ShoppingListItem @aws_api_key
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelShoppingListItemConnection @aws_api_key {
+  items: [ShoppingListItem]
+  nextToken: String
+}
+
+input ModelStringFilterInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+}
+
+input ModelIDFilterInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+}
+
+input ModelIntFilterInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelFloatFilterInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+}
+
+input ModelBooleanFilterInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelShoppingListItemFilterInput {
+  id: ModelIDFilterInput
+  itemName: ModelStringFilterInput
+  isComplete: ModelBooleanFilterInput
+  and: [ModelShoppingListItemFilterInput]
+  or: [ModelShoppingListItemFilterInput]
+  not: ModelShoppingListItemFilterInput
+}
+
+type Query {
+  getShoppingListItem(id: ID!): ShoppingListItem @aws_api_key
+  listShoppingListItems(filter: ModelShoppingListItemFilterInput, limit: Int, nextToken: String): ModelShoppingListItemConnection @aws_api_key
+}
+
+input CreateShoppingListItemInput {
+  id: ID
+  itemName: String!
+  isComplete: Boolean
+}
+
+input UpdateShoppingListItemInput {
+  id: ID!
+  itemName: String
+  isComplete: Boolean
+}
+
+input DeleteShoppingListItemInput {
+  id: ID!
+}
+
+type Subscription {
+  onCreateShoppingListItem: ShoppingListItem @aws_subscribe(mutations: ["createShoppingListItem"]) @aws_api_key
+  onUpdateShoppingListItem: ShoppingListItem @aws_subscribe(mutations: ["updateShoppingListItem"]) @aws_api_key
+  onDeleteShoppingListItem: ShoppingListItem @aws_subscribe(mutations: ["deleteShoppingListItem"]) @aws_api_key
+}

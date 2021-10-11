@@ -6,11 +6,11 @@ import NavBar from './components/NavBar'
 import AddItemCard from './components/AddItemCard'
 import { Grid } from '@material-ui/core'
 
-import { API, graphqlOperation, Auth } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 
 import './configureAmplify'
 import { listShoppingListItems } from "./graphql/queries.js";
-import { createShoppingListItem, deleteShoppingListItem, updateShoppingListItem } from "./graphql/mutations.js"
+import { createShoppingListItem, deleteShoppingListItem, updateShoppingListItem, notifyShoppingDone } from "./graphql/mutations.js"
 import { onUpdateShoppingListItem } from "./graphql/subscriptions.js";
 
 import { withAuthenticator } from '@aws-amplify/ui-react'
@@ -53,6 +53,9 @@ export async function updateItem(itemId, isComplete) {
   );
 }
 
+export async function markShoppingDoneAction() {
+  return await API.graphql(graphqlOperation(notifyShoppingDone))
+}
 
 function App() {
   const [items, setItems] = useState([])
@@ -93,9 +96,7 @@ function App() {
                   if (response) {
                     console.log(response)
                     setItems([...items, response.data.createShoppingListItem])
-                  
                   }
-
                 }
               }
             />
@@ -112,7 +113,12 @@ function App() {
                 const response = await updateItem(id, isComplete)
                 console.log(response)
               }}
+              markCompletedAction={async () => {
+                const response = await markShoppingDoneAction();
+                console.log(response)
+              }}
             />
+           
           </Grid>
         }
       </div>
